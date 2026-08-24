@@ -311,7 +311,6 @@ when the official feed exists.
 This generally reduces broken-feed problems and third-party dependencies.
 
 ---
-
 # 9. Use PubMed when a journal has no reliable RSS
 
 PubMed is an excellent fallback because it can create RSS feeds from searches.
@@ -322,29 +321,37 @@ https://pubmed.ncbi.nlm.nih.gov/
 
 Run a search, then use **Create RSS**.
 
-For example:
-
-```text
-Lancet[Journal]
-```
-
-can be turned into a journal-specific RSS feed.
-
 This is useful when:
 
 - the publisher has no public RSS
 - the publisher's RSS endpoint is broken
 - the journal has moved platforms
-- you want a consistent feed across different publishers
+- you want to monitor a research topic across multiple journals
 
-Then add the PubMed RSS URL to FreshRSS.
+The Research OPML in this repository already contains four pre-configured PubMed RSS feeds. The searches used to create them are listed below so that they can be inspected, modified, or regenerated if necessary.
 
-Recommended naming:
+### PubMed IBD and Computational Methods
 
 ```text
-PubMed — <topic or journal>
-```
-
+(
+  "Inflammatory Bowel Diseases"[Mesh]
+  OR "inflammatory bowel disease"[Title/Abstract]
+  OR Crohn*[Title/Abstract]
+  OR "ulcerative colitis"[Title/Abstract]
+)
+AND
+(
+  "Machine Learning"[Mesh]
+  OR "Artificial Intelligence"[Mesh]
+  OR "machine learning"[Title/Abstract]
+  OR "artificial intelligence"[Title/Abstract]
+  OR "deep learning"[Title/Abstract]
+  OR "neural network*"[Title/Abstract]
+  OR "predictive model*"[Title/Abstract]
+  OR "longitudinal"[Title/Abstract]
+  OR "disease trajectory"[Title/Abstract]
+  OR "disease progression"[Title/Abstract]
+)
 ---
 
 # 10. Build topic feeds with PubMed
