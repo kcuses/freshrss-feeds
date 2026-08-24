@@ -1,5 +1,7 @@
 # FreshRSS Personal News & Research Feeds
 
+*** Ready-to-import OPML files are included for both news and research feeds.
+
 A small, reusable collection of **FreshRSS** feed configurations and setup instructions for building a self-hosted personal news and research reader.
 
 The repository is designed around:
