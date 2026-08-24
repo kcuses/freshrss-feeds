@@ -26,9 +26,15 @@ freshrss-github-repo/
 │   ├── research-setup.md
 │   └── sources.md
 └── opml/
-    ├── freshrss-news.opml
-    ├── freshrss-research.opml
-    └── freshrss-all.opml
+│   ├── freshrss-news.opml
+│   ├── freshrss-research.opml
+│   └── freshrss-all.opml
+│
+└── images/
+│   ├── example_news1.png
+│   ├── example_research1.png
+│   └── example_research2.png
+
 ```
 
 ## Choose a setup
@@ -74,6 +80,9 @@ See:
 8. FreshRSS will then update automatically according to the configured schedule.
 
 The setup guides contain the Windows and macOS instructions.
+
+## Examples
+images/ contains 3 screenshots of FreshRSS feed, showing research articles and news. 
 
 ## OPML files
 
