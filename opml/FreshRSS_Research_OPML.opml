@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>FreshRSS Research Feed Collection</title>
+  </head>
+  <body>
+    <outline text="RESEARCH" title="RESEARCH">
+      
+      
+      
+      
+      <outline text="Key Journals" title="Key Journals">
+        
+        
+        
+        
+        <outline text="Nature" title="Nature">
+          
+          
+          
+          
+          <outline text="Nature" title="Nature" type="rss" xmlUrl="https://feeds.nature.com/nature/rss/aop" htmlUrl="https://www.nature.com/nature/"/>
+          
+          
+          
+          
+          <outline text="Nature Communications" title="Nature Communications" type="rss" xmlUrl="https://feeds.nature.com/ncomms/rss/aop" htmlUrl="https://www.nature.com/ncomms/"/>
+          
+          
+          
+          
+          <outline text="Nature Medicine" title="Nature Medicine" type="rss" xmlUrl="https://feeds.nature.com/nm/rss/aop" htmlUrl="https://www.nature.com/nm/"/>
+          
+          
+          
+          
+          <outline text="Nature Genetics" title="Nature Genetics" type="rss" xmlUrl="https://feeds.nature.com/ng/rss/aop" htmlUrl="https://www.nature.com/ng/"/>
+          
+          
+          
+          
+          <outline text="Nature Methods" title="Nature Methods" type="rss" xmlUrl="https://feeds.nature.com/nmeth/rss/aop" htmlUrl="https://www.nature.com/nmeth/"/>
+          
+          
+          
+          
+          <outline text="Nature Biotechnology" title="Nature Biotechnology" type="rss" xmlUrl="https://feeds.nature.com/nbt/rss/aop" htmlUrl="https://www.nature.com/nbt/"/>
+          
+          
+          
+          
+          <outline text="Nature Machine Intelligence" title="Nature Machine Intelligence" type="rss" xmlUrl="https://feeds.nature.com/natmachintell/rss/aop" htmlUrl="https://www.nature.com/natmachintell/"/>
+          
+          
+          
+          
+          <outline text="Nature Computational Science" title="Nature Computational Science" type="rss" xmlUrl="https://feeds.nature.com/natcomputsci/rss/aop" htmlUrl="https://www.nature.com/natcomputsci/"/>
+          
+          
+        
+        
+        </outline>
+        
+        
+        
+        
+        <outline text="Science" title="Science">
+          
+          
+          
+          
+          <outline text="Science" title="Science" type="rss" xmlUrl="https://www.science.org/action/showFeed?type=etoc&amp;feed=rss&amp;jc=science" htmlUrl="https://www.science.org/journal/science"/>
+          
+          
+          
+          
+          <outline text="Science Translational Medicine" title="Science Translational Medicine" type="rss" xmlUrl="https://www.science.org/action/showFeed?type=etoc&amp;feed=rss&amp;jc=scitransmed" htmlUrl="https://www.science.org/journal/scitransmed"/>
+          
+          
+          
+          
+          <outline text="Science Advances" title="Science Advances" type="rss" xmlUrl="https://www.science.org/action/showFeed?type=etoc&amp;feed=rss&amp;jc=sciadv" htmlUrl="https://www.science.org/journal/sciadv"/>
+          
+          
+        
+        
+        </outline>
+        
+        
+        
+        
+        <outline text="Lancet &amp; Elsevier" title="Lancet &amp; Elsevier">
+          
+          
+          
+          
+          <outline text="The Lancet" title="The Lancet" type="rss" xmlUrl="https://rss.sciencedirect.com/publication/science/1474547X" htmlUrl="https://www.sciencedirect.com/"/>
+          
+          
+          
+          
+          <outline text="The Lancet Digital Health" title="The Lancet Digital Health" type="rss" xmlUrl="https://rss.sciencedirect.com/publication/science/25897500" htmlUrl="https://www.sciencedirect.com/"/>
+          
+          
+          
+          
+          <outline text="The Lancet Global Health" title="The Lancet Global Health" type="rss" xmlUrl="https://rss.sciencedirect.com/publication/science/2214109X" htmlUrl="https://www.sciencedirect.com/"/>
+          
+          
+          
+          
+          <outline text="The Lancet Gastroenterology &amp; Hepatology" title="The Lancet Gastroenterology &amp; Hepatology" type="rss" xmlUrl="https://rss.sciencedirect.com/publication/science/24681253" htmlUrl="https://www.sciencedirect.com/"/>
+          
+          
+          
+          
+          <outline text="The Lancet Microbe" title="The Lancet Microbe" type="rss" xmlUrl="https://rss.sciencedirect.com/publication/science/26665247" htmlUrl="https://www.sciencedirect.com/"/>
+          
+          
+          
+          
+          <outline text="The Lancet Public Health" title="The Lancet Public Health" type="rss" xmlUrl="https://rss.sciencedirect.com/publication/science/24682667" htmlUrl="https://www.sciencedirect.com/"/>
+          
+          
+          
+          
+          <outline text="The Lancet Regional Health - Europe" title="The Lancet Regional Health - Europe" type="rss" xmlUrl="https://rss.sciencedirect.com/publication/science/26667762" htmlUrl="https://www.sciencedirect.com/"/>
+          
+          
+          
+          
+          <outline text="The Lancet Regional Health - Africa" title="The Lancet Regional Health - Africa" type="rss" xmlUrl="https://rss.sciencedirect.com/publication/science/27723682" htmlUrl="https://www.sciencedirect.com/"/>
+          
+          
+          
+          
+          <outline text="eClinicalMedicine" title="eClinicalMedicine" type="rss" xmlUrl="https://rss.sciencedirect.com/publication/science/25895370" htmlUrl="https://www.sciencedirect.com/"/>
+          
+          
+          
+          
+          <outline text="Gastroenterology" title="Gastroenterology" type="rss" xmlUrl="https://rss.sciencedirect.com/publication/science/00165085" htmlUrl="https://www.sciencedirect.com/"/>
+          
+          
+        
+        
+        </outline>
+        
+        
+        
+        
+        <outline text="BMJ" title="BMJ">
+          
+          
+          
+          
+          <outline text="BMJ" title="BMJ" type="rss" xmlUrl="https://www.bmj.com/rss" htmlUrl="https://www.bmj.com/"/>
+          
+          
+          
+          
+          <outline text="Gut" title="Gut" type="rss" xmlUrl="https://gut.bmj.com/rss/current.xml" htmlUrl="https://gut.bmj.com/"/>
+          
+          
+        
+        
+        </outline>
+        
+        
+      
+        
+        <outline text="Cell" title="Cell">
+          
+          
+          <outline text="Cell" title="Cell" type="rss" xmlUrl="https://www.cell.com/cell/current.rss" htmlUrl="https://www.cell.com/cell/"/>
+          
+          
+          <outline text="Cell Systems" title="Cell Systems" type="rss" xmlUrl="https://www.cell.com/cell-systems/current.rss" htmlUrl="https://www.cell.com/cell-systems/"/>
+          
+          
+          <outline text="Cell Genomics" title="Cell Genomics" type="rss" xmlUrl="https://www.cell.com/cell-genomics/current.rss" htmlUrl="https://www.cell.com/cell-genomics/"/>
+          
+          
+          <outline text="Trends in Genetics" title="Trends in Genetics" type="rss" xmlUrl="https://www.cell.com/trends/genetics/current.rss" htmlUrl="https://www.cell.com/trends/genetics/"/>
+          
+        
+        </outline>
+        
+        
+        <outline text="Springer" title="Springer">
+          
+          
+          <outline text="Minds and Machines" title="Minds and Machines" type="rss" xmlUrl="https://link.springer.com/search.rss?facet-content-type=Article&amp;facet-journal-id=11023&amp;channel-name=Minds+and+Machines" htmlUrl="https://link.springer.com/journal/11023"/>
+          
+          
+          <outline text="Philosophy and Technology" title="Philosophy and Technology" type="rss" xmlUrl="https://link.springer.com/search.rss?facet-content-type=Article&amp;facet-journal-id=13347&amp;channel-name=Philosophy+%26+Technology" htmlUrl="https://link.springer.com/journal/13347"/>
+          
+        
+        </outline>
+        
+        
+        <outline text="PLOS" title="PLOS">
+          
+          
+          <outline text="PLOS Digital Health" title="PLOS Digital Health" type="rss" xmlUrl="https://journals.plos.org/digitalhealth/feed/atom" htmlUrl="https://journals.plos.org/digitalhealth/"/>
+          
+          
+          <outline text="PLOS Medicine" title="PLOS Medicine" type="rss" xmlUrl="https://journals.plos.org/plosmedicine/feed/atom" htmlUrl="https://journals.plos.org/plosmedicine/"/>
+          
+        
+        </outline>
+        
+        
+        <outline text="BMC" title="BMC">
+          
+          
+          <outline text="BMC Medicine" title="BMC Medicine" type="rss" xmlUrl="https://bmcmedicine.biomedcentral.com/articles/most-recent/rss.xml" htmlUrl="https://link.springer.com/journal/12916"/>
+          
+        
+        </outline>
+        
+      
+      </outline>
+      
+      
+      
+      
+      <outline text="PubMed" title="PubMed">
+        
+        
+        
+        
+        <outline text="PubMed IBD and Computational Methods" title="PubMed IBD and Computational Methods" type="rss" xmlUrl="https://pubmed.ncbi.nlm.nih.gov/rss/search/1vKcRI80qSZTScF27MxTk-DZ5u04iiv-tRT6RZtIA9owOcVY-o/?limit=50&amp;utm_campaign=pubmed-2&amp;fc=20260824145016" htmlUrl="https://pubmed.ncbi.nlm.nih.gov/"/>
+        
+        
+        
+        
+        <outline text="PubMed Epidemiology and ML" title="PubMed Epidemiology and ML" type="rss" xmlUrl="https://pubmed.ncbi.nlm.nih.gov/rss/search/1dk9JPLbeoTSFJWSS_qJgn3Lmz6BblYe2DMlECldG8E80ZKgBI/?limit=50&amp;utm_campaign=pubmed-2&amp;fc=20260824145051" htmlUrl="https://pubmed.ncbi.nlm.nih.gov/"/>
+        
+        
+        
+        
+        <outline text="PubMed Multi-omics and Biomarkers" title="PubMed Multi-omics and Biomarkers" type="rss" xmlUrl="https://pubmed.ncbi.nlm.nih.gov/rss/search/145VRaMa7R_MRzAQGNsT26XkA6-04LppIyeeEa7Dg9ze1mp9KG/?limit=50&amp;utm_campaign=pubmed-2&amp;fc=20260824145143" htmlUrl="https://pubmed.ncbi.nlm.nih.gov/"/>
+        
+        
+        
+        
+        <outline text="PubMed Causal and Population Health" title="PubMed Causal and Population Health" type="rss" xmlUrl="https://pubmed.ncbi.nlm.nih.gov/rss/search/1rIWwFURZ86SSAkAEPavvnDlaLpai9d4qB0xNzgroWe_aNW1Ir/?limit=50&amp;utm_campaign=pubmed-2&amp;fc=20260824145221" htmlUrl="https://pubmed.ncbi.nlm.nih.gov/"/>
+        
+        
+      
+      
+      </outline>
+      
+      
+    
+    
+    </outline>
+  </body>
+</opml>

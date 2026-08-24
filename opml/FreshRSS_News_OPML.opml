@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>FreshRSS News Feed Collection</title>
+  </head>
+  <body>
+    <outline text="NEWS" title="NEWS">
+      
+      
+      
+      
+      <outline text="Denmark" title="Denmark">
+        
+        
+        
+        
+        <outline text="DR Indland" title="DR Indland" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/indland" htmlUrl="https://www.dr.dk/nyheder/"/>
+        
+        
+        
+        
+        <outline text="DR Udland" title="DR Udland" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/udland" htmlUrl="https://www.dr.dk/nyheder/"/>
+        
+        
+        
+        
+        <outline text="DR Politik" title="DR Politik" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/politik" htmlUrl="https://www.dr.dk/nyheder/"/>
+        
+        
+        
+        
+        <outline text="DR Viden" title="DR Viden" type="rss" xmlUrl="https://www.dr.dk/nyheder/service/feeds/viden" htmlUrl="https://www.dr.dk/nyheder/"/>
+        
+        
+        
+        
+        <outline text="Politiken (Google News site feed)" title="Politiken (Google News site feed)" type="rss" xmlUrl="https://news.google.com/rss/search?q=site%3Apolitiken.dk&amp;hl=da&amp;gl=DK&amp;ceid=DK%3Ada" htmlUrl="https://politiken.dk/"/>
+        
+        
+        
+        
+        <outline text="Berlingske (Google News site feed)" title="Berlingske (Google News site feed)" type="rss" xmlUrl="https://news.google.com/rss/search?q=site%3Aberlingske.dk&amp;hl=da&amp;gl=DK&amp;ceid=DK%3Ada" htmlUrl="https://www.berlingske.dk/"/>
+        
+        
+        
+        
+        <outline text="Information (Google News site feed)" title="Information (Google News site feed)" type="rss" xmlUrl="https://news.google.com/rss/search?q=site%3Ainformation.dk&amp;hl=da&amp;gl=DK&amp;ceid=DK%3Ada" htmlUrl="https://www.information.dk/"/>
+        
+        
+        
+        
+        <outline text="The Copenhagen Post" title="The Copenhagen Post" type="rss" xmlUrl="https://cphpost.dk/feed/" htmlUrl="https://cphpost.dk/"/>
+        
+        
+      
+      
+      </outline>
+      
+      
+      
+      
+      <outline text="Copenhagen" title="Copenhagen">
+        
+        
+        
+        
+        <outline text="DR Hovedstadsområdet" title="DR Hovedstadsområdet" type="rss" xmlUrl="https://www.dr.dk/Nyheder/Service/feeds/regionale/kbh/" htmlUrl="https://www.dr.dk/nyheder/regioner/hovedstaden"/>
+        
+        
+        
+        
+        <outline text="The Copenhagen Post" title="The Copenhagen Post" type="rss" xmlUrl="https://cphpost.dk/feed/" htmlUrl="https://cphpost.dk/"/>
+        
+        
+      
+      
+      </outline>
+      
+      
+      
+      
+      <outline text="Nordics" title="Nordics">
+        
+        
+        
+        
+        <outline text="Daily Northern" title="Daily Northern" type="rss" xmlUrl="https://www.dailynorthern.com/feed/" htmlUrl="https://www.dailynorthern.com/"/>
+        
+        
+      
+      
+      </outline>
+      
+      
+      
+      
+      <outline text="UK" title="UK">
+        
+        
+        
+        
+        <outline text="BBC UK" title="BBC UK" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/rss.xml?edition=uk" htmlUrl="https://www.bbc.com/news"/>
+        
+        
+        
+        
+        <outline text="Guardian UK" title="Guardian UK" type="rss" xmlUrl="https://www.theguardian.com/uk-news/rss" htmlUrl="https://www.theguardian.com/uk-news"/>
+        
+        
+        
+        
+        <outline text="Sky News World" title="Sky News World" type="rss" xmlUrl="https://feeds.skynews.com/feeds/rss/world.xml" htmlUrl="https://news.sky.com/"/>
+        
+        
+      
+      
+      </outline>
+      
+      
+      
+      
+      <outline text="Europe" title="Europe">
+        
+        
+        
+        
+        <outline text="BBC Europe" title="BBC Europe" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/world/europe/rss.xml" htmlUrl="https://www.bbc.com/news/world/europe"/>
+        
+        
+        
+        
+        <outline text="DW English" title="DW English" type="rss" xmlUrl="https://rss.dw.com/xml/rss-en-all" htmlUrl="https://www.dw.com/en"/>
+        
+        
+        
+        
+        <outline text="France 24 English" title="France 24 English" type="rss" xmlUrl="https://www.france24.com/en/rss" htmlUrl="https://www.france24.com/en/"/>
+        
+        
+        
+        
+        <outline text="Euronews English" title="Euronews English" type="rss" xmlUrl="https://www.euronews.com/rss?format=xml" htmlUrl="https://www.euronews.com/"/>
+        
+        
+        
+        
+        <outline text="POLITICO Europe" title="POLITICO Europe" type="rss" xmlUrl="https://www.politico.eu/feed/" htmlUrl="https://www.politico.eu/"/>
+        
+        
+        
+        
+        <outline text="Guardian World" title="Guardian World" type="rss" xmlUrl="https://www.theguardian.com/world/rss" htmlUrl="https://www.theguardian.com/world"/>
+        
+        
+        
+        
+        <outline text="Reuters Europe (RSSHub)" title="Reuters Europe (RSSHub)" type="rss" xmlUrl="https://rsshub.app/reuters/world/europe" htmlUrl="https://www.reuters.com/world/europe/"/>
+        
+        
+        
+        
+        <outline text="AP Top News (RSSHub)" title="AP Top News (RSSHub)" type="rss" xmlUrl="https://rsshub.app/apnews/topics/apf-topnews" htmlUrl="https://apnews.com/apf-topnews"/>
+        
+        
+      
+      
+      </outline>
+      
+      
+      
+      
+      <outline text="North America" title="North America">
+        
+        
+        
+        
+        <outline text="Canada" title="Canada">
+          
+          
+          
+          
+          <outline text="CBC Canada" title="CBC Canada" type="rss" xmlUrl="https://www.cbc.ca/webfeed/rss/rss-canada" htmlUrl="https://www.cbc.ca/news/canada"/>
+          
+          
+          
+          
+          <outline text="CBC Toronto" title="CBC Toronto" type="rss" xmlUrl="https://www.cbc.ca/webfeed/rss/rss-canada-toronto" htmlUrl="https://www.cbc.ca/news/canada/toronto"/>
+          
+          
+          
+          
+          <outline text="Reuters Canada (RSSHub)" title="Reuters Canada (RSSHub)" type="rss" xmlUrl="https://rsshub.app/reuters/world/americas" htmlUrl="https://www.reuters.com/world/americas/"/>
+          
+          
+          
+          
+          <outline text="The Toronto Star (Google News site feed)" title="The Toronto Star (Google News site feed)" type="rss" xmlUrl="https://news.google.com/rss/search?q=site%3Athestar.com%2Fnews%2Fgta&amp;hl=en-CA&amp;gl=CA&amp;ceid=CA%3Aen" htmlUrl="https://www.thestar.com/news/gta.html"/>
+          
+          
+        
+        
+        </outline>
+        
+        
+        
+        
+        <outline text="United States" title="United States">
+          
+          
+          
+          
+          <outline text="Reuters United States (RSSHub)" title="Reuters United States (RSSHub)" type="rss" xmlUrl="https://rsshub.app/reuters/world/us" htmlUrl="https://www.reuters.com/world/us/"/>
+          
+          
+          
+          
+          <outline text="AP Top News (RSSHub)" title="AP Top News (RSSHub)" type="rss" xmlUrl="https://rsshub.app/apnews/topics/apf-topnews" htmlUrl="https://apnews.com/apf-topnews"/>
+          
+          
+          
+          
+          <outline text="NPR News" title="NPR News" type="rss" xmlUrl="https://feeds.npr.org/1001/rss.xml" htmlUrl="https://www.npr.org/sections/news/"/>
+          
+          
+          
+          
+          <outline text="New York Times World" title="New York Times World" type="rss" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/World.xml" htmlUrl="https://www.nytimes.com/section/world"/>
+          
+          
+          
+          
+          <outline text="New York Times Politics" title="New York Times Politics" type="rss" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml" htmlUrl="https://www.nytimes.com/section/politics"/>
+          
+          
+          
+          
+          <outline text="Guardian US" title="Guardian US" type="rss" xmlUrl="https://www.theguardian.com/us-news/rss" htmlUrl="https://www.theguardian.com/us-news"/>
+          
+          
+        
+        
+        </outline>
+        
+        
+      
+      
+      </outline>
+      
+      
+      
+      
+      <outline text="India" title="India">
+        
+        
+        
+        
+        <outline text="Reuters India (RSSHub)" title="Reuters India (RSSHub)" type="rss" xmlUrl="https://rsshub.app/reuters/world/india" htmlUrl="https://www.reuters.com/world/india/"/>
+        
+        
+        
+        
+        <outline text="The Hindu - India" title="The Hindu - India" type="rss" xmlUrl="https://www.thehindu.com/news/national/feeder/default.rss" htmlUrl="https://www.thehindu.com/news/national/"/>
+        
+        
+        
+        
+        <outline text="Indian Express - India" title="Indian Express - India" type="rss" xmlUrl="https://indianexpress.com/section/india/feed/" htmlUrl="https://indianexpress.com/section/india/"/>
+        
+        
+      
+      
+      </outline>
+      
+      
+      
+      
+      <outline text="Global" title="Global">
+        
+        
+        
+        
+        <outline text="BBC World" title="BBC World" type="rss" xmlUrl="https://feeds.bbci.co.uk/news/world/rss.xml" htmlUrl="https://www.bbc.com/news/world"/>
+        
+        
+        
+        
+        <outline text="Al Jazeera English" title="Al Jazeera English" type="rss" xmlUrl="https://www.aljazeera.com/xml/rss/all.xml" htmlUrl="https://www.aljazeera.com/"/>
+        
+        
+        
+        
+        <outline text="Reuters World (RSSHub)" title="Reuters World (RSSHub)" type="rss" xmlUrl="https://rsshub.app/reuters/world" htmlUrl="https://www.reuters.com/world/"/>
+        
+        
+        
+        
+        <outline text="AP Top News (RSSHub)" title="AP Top News (RSSHub)" type="rss" xmlUrl="https://rsshub.app/apnews/topics/apf-topnews" htmlUrl="https://apnews.com/apf-topnews"/>
+        
+        
+      
+      
+      </outline>
+      
+      
+    
+    
+    </outline>
+  </body>
+</opml>

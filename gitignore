@@ -1,0 +1,24 @@
+# FreshRSS runtime data
+data/
+data_backup/
+data_old/
+extensions/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Secrets / environment files
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor/project files
+.vscode/
+.idea/
+*.swp
+*.swo
