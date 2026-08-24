@@ -81,8 +81,19 @@ See:
 
 The setup guides contain the Windows and macOS instructions.
 
-## Examples
-images/ contains 3 screenshots of FreshRSS feed, showing research articles and news. 
+## FreshRSS interface
+
+### News and research dashboard
+
+![FreshRSS main view](images/example_research1.png)
+
+### News feeds
+
+![FreshRSS news view](images/example_research2.png)
+
+### Research feeds
+
+![FreshRSS research view](images/example_news1.png)
 
 ## OPML files
 
