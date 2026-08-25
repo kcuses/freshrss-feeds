@@ -143,20 +143,6 @@ When a feed breaks:
 4. Update the OPML file.
 5. Record the change in `CHANGELOG.md`.
 
-## Important: what is not in this repository
-
-Do **not** commit your local FreshRSS runtime data, database, users, passwords, or other private state.
-
-Your local installation should remain outside the repository, for example:
-
-```text
-C:\FreshRSS```
-
-or:
-
-```text
-~/FreshRSS/
-```
 
 Only the reproducible configuration, documentation, and OPML feed lists belong in this repository.
 
