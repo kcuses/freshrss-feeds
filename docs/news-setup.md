@@ -1,17 +1,13 @@
 # FreshRSS: Self-Hosted International, European and Danish News Feed
 
-This guide shows how to build a personal news RSS reader with **FreshRSS + Docker**, running locally on either **Windows or macOS**.
+This guide shows how to build a personal news RSS reader with **FreshRSS + Docker**, using **two separate FreshRSS instances**:
 
-The setup is intended for:
+- **News FreshRSS:** `http://localhost:8080`
+- **Research FreshRSS:** `http://localhost:8081` (described separately in `research-setup.md`)
 
-- international/world news
-- European news
-- Danish news
-- optional local/regional news
+The News instance is intentionally separate from the Research instance. This keeps news subscriptions, categories, article state, and settings completely independent.
 
-The local component is deliberately flexible so that the same base setup can work for users in different Danish cities, regions, or countries.
-
-No paid hosting is required.
+The setup works on **Windows, macOS, and Linux**.
 
 ---
 
@@ -23,29 +19,75 @@ European RSS feeds ────────┤
 Danish RSS feeds ──────────┤
 Local RSS feed(s) ────────┤
                            ↓
-                       FreshRSS
+                     FreshRSS News
                            ↓
-                  http://localhost:8080
+                    localhost:8080
 ```
 
 FreshRSS provides:
 
-- one reading interface
+- one news reading interface
 - categories
 - unread/read state
 - filtering
 - search
 - feed management
 - local self-hosting
-- automatic updates
+- automatic hourly updates
+
+No paid hosting is required.
 
 ---
 
-# 2. Install Docker
+# 2. Requirements
 
 ## Windows
 
 Windows Home is sufficient when using **Linux containers**.
+
+You need:
+
+- Windows 10/11
+- hardware virtualization enabled
+- WSL 2
+- Docker Desktop
+
+## macOS
+
+You need:
+
+- a supported Intel or Apple Silicon Mac
+- Docker Desktop for Mac
+
+WSL is not required on macOS.
+
+## Linux
+
+You need:
+
+- a supported Linux distribution
+- Docker Engine
+- Docker Compose plugin
+
+For Ubuntu/Debian, follow Docker's official Linux installation instructions:
+
+https://docs.docker.com/engine/install/
+
+Then verify:
+
+```bash
+docker --version
+docker compose version
+docker run hello-world
+```
+
+If Docker requires root privileges on your system, you may need to use `sudo` or configure the Docker user group according to Docker's documentation.
+
+---
+
+# 3. Install Docker
+
+## Windows
 
 Install Docker Desktop:
 
@@ -98,9 +140,25 @@ docker run hello-world
 
 WSL is not required on macOS.
 
+## Linux
+
+Install Docker Engine and the Docker Compose plugin using the official Docker documentation:
+
+https://docs.docker.com/engine/install/
+
+Then verify:
+
+```bash
+docker --version
+docker compose version
+docker run hello-world
+```
+
 ---
 
-# 3. Create the FreshRSS project directory
+# 4. Create the FreshRSS project directory
+
+Use a directory dedicated to this project.
 
 ## Windows
 
@@ -116,9 +174,18 @@ mkdir -p ~/FreshRSS
 cd ~/FreshRSS
 ```
 
+## Linux
+
+```bash
+mkdir -p ~/FreshRSS
+cd ~/FreshRSS
+```
+
 ---
 
-# 4. Create `compose.yml`
+# 5. Create `compose.yml`
+
+The two FreshRSS instances are defined in a single Docker Compose file.
 
 ## Windows
 
@@ -126,7 +193,7 @@ cd ~/FreshRSS
 notepad compose.yml
 ```
 
-## macOS
+## macOS/Linux
 
 ```bash
 nano compose.yml
@@ -136,9 +203,9 @@ Paste:
 
 ```yaml
 services:
-  freshrss:
+  freshrss-news:
     image: freshrss/freshrss:latest
-    container_name: freshrss
+    container_name: freshrss-news
     restart: unless-stopped
     ports:
       - "8080:80"
@@ -146,32 +213,77 @@ services:
       TZ: Europe/Copenhagen
       CRON_MIN: "0"
     volumes:
-      - ./data:/var/www/FreshRSS/data
-      - ./extensions:/var/www/FreshRSS/extensions
+      - ./news-data:/var/www/FreshRSS/data
+      - ./news-extensions:/var/www/FreshRSS/extensions
+
+  freshrss-research:
+    image: freshrss/freshrss:latest
+    container_name: freshrss-research
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      TZ: Europe/Copenhagen
+      CRON_MIN: "0"
+    volumes:
+      - ./research-data:/var/www/FreshRSS/data
+      - ./research-extensions:/var/www/FreshRSS/extensions
 ```
 
-Replace the timezone if needed.
+### Change the timezone
+
+Replace:
+
+```text
+Europe/Copenhagen
+```
+
+with your own IANA timezone if needed.
 
 Examples:
 
 ```text
-Europe/Copenhagen
 Europe/Riga
 Europe/Stockholm
 Europe/London
+Europe/Berlin
+America/Toronto
+America/New_York
 ```
 
-The example uses:
+### Why there are two services
+
+The instances are intentionally independent:
+
+```text
+News
+  localhost:8080
+  news-data/
+
+Research
+  localhost:8081
+  research-data/
+```
+
+Each has its own database, subscriptions, categories, settings, and article state.
+
+### Update frequency
+
+Both services use:
 
 ```yaml
 CRON_MIN: "0"
 ```
 
-which means FreshRSS updates once per hour.
+This runs the FreshRSS updater once per hour.
+
+The News instance is intended for deliberate reading and catching up rather than replacing breaking-news notifications.
+
+Save the file.
 
 ---
 
-# 5. Start FreshRSS
+# 6. Start FreshRSS
 
 From the project directory:
 
@@ -179,13 +291,22 @@ From the project directory:
 docker compose up -d
 ```
 
-Check:
+Then verify:
 
 ```text
 docker compose ps
 ```
 
-Open:
+You should see:
+
+```text
+freshrss-news
+freshrss-research
+```
+
+both running.
+
+Open the News instance:
 
 ```text
 http://localhost:8080
@@ -193,19 +314,49 @@ http://localhost:8080
 
 ---
 
-# 6. Complete the initial FreshRSS setup
+# 7. Complete the News FreshRSS setup
 
-On the FreshRSS setup screen:
+FreshRSS will open its installation screen.
 
-- choose the language
-- create the administrator account
-- use **SQLite** for a simple personal installation
+Choose:
 
-After setup, FreshRSS will open the main interface.
+- preferred interface language
+- administrator username/password
+- **SQLite** for the database
+
+After setup, FreshRSS will open the News interface.
+
+The Research instance has a completely separate setup at:
+
+```text
+http://localhost:8081
+```
+
+See `research-setup.md` for the Research installation.
 
 ---
 
-# 7. Organize the news categories
+# 8. Import the News OPML
+
+Use the News OPML from this repository:
+
+```text
+opml/freshrss-news.opml
+```
+
+In FreshRSS:
+
+**Subscription management → Import/Export → Import**
+
+Select the News OPML.
+
+After importing, click the refresh/update button.
+
+The feed collection contains international, European, Danish, Nordic, UK, and other selected news sources.
+
+---
+
+# 9. Organize the news categories
 
 A useful general structure is:
 
@@ -240,7 +391,7 @@ The important idea is:
 
 ---
 
-# 8. International news
+# 10. International news
 
 Start with a small set of strong international sources.
 
@@ -259,7 +410,7 @@ A smaller set of high-quality sources usually produces a more usable feed.
 
 ---
 
-# 9. European news
+# 11. European news
 
 Use pan-European or international feeds rather than subscribing to every country individually.
 
@@ -284,7 +435,7 @@ rather than:
 
 ---
 
-# 10. Danish news
+# 12. Danish news
 
 For Denmark, a good starting point is:
 
@@ -312,7 +463,7 @@ Do not feel that all three are necessary.
 
 ---
 
-# 11. Local Danish news: easy solutions
+# 13. Local Danish news: easy solutions
 
 Local news is the part that should be customized per user.
 
@@ -328,8 +479,6 @@ A user elsewhere in Denmark can choose the relevant DR regional area.
 
 This is usually the easiest solution.
 
----
-
 ## Option B — local newspaper RSS
 
 Search the local newspaper's website for:
@@ -342,8 +491,6 @@ Feed
 ```
 
 If a direct RSS feed exists, add it directly to FreshRSS.
-
----
 
 ## Option C — local public-service or government feeds
 
@@ -363,15 +510,11 @@ Copenhagen Police RSS
 
 can provide local public-safety updates.
 
-This can be particularly useful if local newspapers have poor RSS support.
-
----
-
 ## Option D — Google News RSS for a local query
 
 When a site has no usable RSS feed, Google News can provide an RSS feed from a search.
 
-For example, a user interested in Copenhagen could create a query for:
+For example:
 
 ```text
 Copenhagen
@@ -383,7 +526,7 @@ or:
 Copenhagen OR København
 ```
 
-and then use the generated Google News RSS URL.
+can be used as a local search query.
 
 This is a convenient fallback because the user doesn't have to build or host a scraper.
 
@@ -391,7 +534,7 @@ It is best used as a **supplement**, not as the only local-news source.
 
 ---
 
-# 12. Adding feeds to FreshRSS
+# 14. Adding feeds to FreshRSS
 
 For every feed:
 
@@ -411,7 +554,7 @@ FreshRSS can generally consume either RSS or Atom feeds.
 
 ---
 
-# 13. Prefer official feeds
+# 15. Prefer official feeds
 
 Use this order of preference:
 
@@ -420,7 +563,7 @@ Official publisher RSS
         ↓
 Official Atom feed
         ↓
-Pubic-service / government RSS
+Public-service / government RSS
         ↓
 Google News RSS
         ↓
@@ -431,7 +574,7 @@ Avoid building the core feed around unreliable third-party RSS conversion servic
 
 ---
 
-# 14. Building a balanced news collection
+# 16. Building a balanced news collection
 
 A good starting point might be:
 
@@ -468,29 +611,25 @@ The goal is:
 
 ---
 
-# 15. Automatic hourly updates
+# 17. Automatic hourly updates
 
-The Compose file uses:
+Both FreshRSS instances contain:
 
 ```yaml
 CRON_MIN: "0"
 ```
 
-FreshRSS will update feeds once per hour.
+so both update automatically once per hour.
 
-This is a good default for a personal news reader that is **not intended to replace breaking-news alerts**.
+The computer and Docker must be running for updates to occur.
 
-Urgent notifications can continue to come from:
-
-- phone news apps
-- publisher apps
-- operating-system notifications
-
-FreshRSS can then be used as the place for deliberate reading and catching up.
+If the computer is shut down, FreshRSS will not fetch feeds during that period.
 
 ---
 
-# 16. Useful Docker commands
+# 18. Useful Docker commands
+
+These commands operate on both services unless you explicitly specify a service.
 
 ## Start
 
@@ -504,6 +643,8 @@ docker compose up -d
 docker compose down
 ```
 
+This stops both containers but does not delete persistent data.
+
 ## Restart
 
 ```text
@@ -516,10 +657,22 @@ docker compose restart
 docker compose ps
 ```
 
-## View logs
+## View logs for both
 
 ```text
-docker logs freshrss --tail 100
+docker compose logs --tail 100
+```
+
+## View News logs
+
+```text
+docker logs freshrss-news --tail 100
+```
+
+## View Research logs
+
+```text
+docker logs freshrss-research --tail 100
 ```
 
 ## Apply Compose changes
@@ -530,27 +683,84 @@ docker compose up -d --force-recreate
 
 ---
 
-# 17. Backup
+# 19. Backup
 
-Keep backups of:
-
-```text
-compose.yml
-data/
-extensions/
-```
-
-The most important persistent data is in:
+The two persistent data directories are:
 
 ```text
-data/
+news-data/
+research-data/
 ```
 
-Do not commit FreshRSS's `data/` directory to a public GitHub repository.
+Extensions are stored in:
+
+```text
+news-extensions/
+research-extensions/
+```
+
+A simple backup is to copy the complete FreshRSS project directory.
+
+Do not put these runtime directories into a public Git repository.
 
 ---
 
-# 18. Sharing a feed setup
+# 20. Migrating News FreshRSS to another computer
+
+The setup is portable.
+
+On the new computer:
+
+1. Install Docker.
+2. Create the project directory.
+3. Copy:
+   - `compose.yml`
+   - `news-data/`
+   - `news-extensions/`
+4. Start:
+
+```text
+docker compose up -d
+```
+
+Then open:
+
+```text
+http://localhost:8080
+```
+
+For a genuinely new News installation, use the News OPML instead of copying an existing database.
+
+---
+
+# 21. Migrating the complete setup
+
+To move both News and Research together, copy:
+
+```text
+compose.yml
+news-data/
+news-extensions/
+research-data/
+research-extensions/
+```
+
+Then run:
+
+```text
+docker compose up -d
+```
+
+The two services will be restored at:
+
+```text
+http://localhost:8080
+http://localhost:8081
+```
+
+---
+
+# 22. Sharing a feed setup
 
 Once a good collection has been created:
 
@@ -558,54 +768,46 @@ Once a good collection has been created:
 
 Export the subscriptions as OPML.
 
-The OPML can then be:
+For this repository, keep News and Research exports separate:
 
-- shared with another user
-- imported on another computer
-- stored in GitHub
-- used as a baseline for a second installation
+```text
+opml/freshrss-news.opml
+opml/freshrss-research.opml
+```
 
-A recipient can then delete or add local feeds after importing.
+A recipient can import either collection into the corresponding FreshRSS instance and then add or remove local feeds as needed.
+
+The combined OPML exists for completeness, but it is not part of the recommended two-instance setup.
 
 ---
 
-# 19. Suggested GitHub repository structure
-
-For a public reusable setup:
-
-```text
-freshrss-news/
-├── README.md
-├── docs/
-│   └── FreshRSS_News_Setup_Guide.md
-└── opml/
-    └── news_base.opml
-```
-
-For a repository containing multiple variants:
+# 23. Suggested GitHub repository structure
 
 ```text
 freshrss-feeds/
 ├── README.md
 ├── docs/
-│   ├── research-guide.md
-│   └── news-guide.md
+│   ├── news-setup.md
+│   ├── research-setup.md
+│   └── sources.md
 └── opml/
-    ├── research.opml
-    └── news-international-europe-denmark.opml
+    ├── freshrss-news.opml
+    ├── freshrss-research.opml
+    └── freshrss-all.opml
 ```
 
 Do not commit:
 
 ```text
-data/
+news-data/
+research-data/
 ```
 
 or FreshRSS databases.
 
 ---
 
-# 20. Local-news customization checklist
+# 24. Local-news customization checklist
 
 When a user wants local news:
 
@@ -613,13 +815,13 @@ When a user wants local news:
 - [ ] Check local newspaper RSS.
 - [ ] Check local police/public-service RSS.
 - [ ] Check municipal or public-agency feeds.
-- [ ] Use a Google News RSS query if no direct feed exists.
+- [ ] Use a Google News RSS query if no direct RSS exists.
 - [ ] Put local feeds in a dedicated category.
 - [ ] Keep the local section small enough to remain useful.
 
 ---
 
-# 21. Minimal recommended structure
+# 25. Minimal recommended structure
 
 For a general international + European + Danish setup:
 
