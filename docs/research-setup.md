@@ -1,34 +1,41 @@
 # FreshRSS: Self-Hosted Research Article Feed
 
-This guide shows how to build a personal research-article RSS reader with **FreshRSS + Docker**, running locally on either **Windows or macOS**.
+This guide shows how to build a personal research-article RSS reader with **FreshRSS + Docker**, using **two separate FreshRSS instances**:
 
-The setup is intentionally general. Each user can choose their own journals and PubMed searches.
+- **Research FreshRSS:** `http://localhost:8081`
+- **News FreshRSS:** `http://localhost:8080` (described separately in `news-setup.md`)
 
-## What this setup does
+The research instance is intentionally separate from the news instance. This keeps research subscriptions, categories, article state, and settings completely independent.
+
+The setup works on **Windows, macOS, and Linux**.
+
+---
+
+# 1. What this setup does
 
 ```text
 Journal RSS feeds ──────────────┐
                                 │
 PubMed topic RSS feeds ────────┤
                                 ↓
-                           FreshRSS
+                     FreshRSS Research
                                 ↓
-                    http://localhost:8080
+                       localhost:8081
 ```
 
-FreshRSS becomes a single research dashboard containing:
+FreshRSS becomes a dedicated research dashboard containing:
 
 - direct feeds from journals that provide RSS/Atom
 - PubMed RSS feeds for topics or journals
 - categories for organizing journals
-- one local, self-hosted reader
-- automatic updates at a user-defined interval
+- a local, self-hosted reader
+- automatic hourly updates
 
 No paid hosting is required.
 
 ---
 
-# 1. Requirements
+# 2. Requirements
 
 ## Windows
 
@@ -48,11 +55,33 @@ You need:
 - a supported Intel or Apple Silicon Mac
 - Docker Desktop for Mac
 
-WSL is **not** required on macOS.
+WSL is not required on macOS.
+
+## Linux
+
+You need:
+
+- a supported Linux distribution
+- Docker Engine
+- Docker Compose plugin
+
+For Ubuntu/Debian, follow Docker's official Linux installation instructions:
+
+https://docs.docker.com/engine/install/
+
+Then verify:
+
+```bash
+docker --version
+docker compose version
+docker run hello-world
+```
+
+If Docker requires root privileges on your system, you may need to use `sudo` or configure the Docker user group according to Docker's documentation.
 
 ---
 
-# 2. Install Docker
+# 3. Install Docker
 
 ## Windows
 
@@ -60,7 +89,7 @@ Install Docker Desktop:
 
 https://docs.docker.com/desktop/setup/install/windows-install/
 
-Docker Desktop on Windows should use the **WSL 2 backend** and Linux containers.
+Use the WSL 2 backend and Linux containers.
 
 After installation, open PowerShell and verify:
 
@@ -77,12 +106,7 @@ wsl --status
 wsl -l -v
 ```
 
-Your Linux distribution should show:
-
-```text
-VERSION
-2
-```
+Your Linux distribution should use version 2.
 
 If WSL is not installed:
 
@@ -113,13 +137,27 @@ docker compose version
 docker run hello-world
 ```
 
+## Linux
+
+Install Docker Engine and the Docker Compose plugin using the official Docker documentation:
+
+https://docs.docker.com/engine/install/
+
+Then verify:
+
+```bash
+docker --version
+docker compose version
+docker run hello-world
+```
+
 ---
 
-# 3. Create the FreshRSS project directory
+# 4. Create the FreshRSS project directory
+
+Use a directory dedicated to this project.
 
 ## Windows
-
-Open PowerShell:
 
 ```powershell
 mkdir C:\FreshRSS
@@ -128,7 +166,12 @@ cd C:\FreshRSS
 
 ## macOS
 
-Open Terminal:
+```bash
+mkdir -p ~/FreshRSS
+cd ~/FreshRSS
+```
+
+## Linux
 
 ```bash
 mkdir -p ~/FreshRSS
@@ -137,9 +180,9 @@ cd ~/FreshRSS
 
 ---
 
-# 4. Create `compose.yml`
+# 5. Create `compose.yml`
 
-The same Docker Compose configuration can be used on both Windows and macOS.
+The two FreshRSS instances are defined in a single Docker Compose file.
 
 ## Windows
 
@@ -147,19 +190,19 @@ The same Docker Compose configuration can be used on both Windows and macOS.
 notepad compose.yml
 ```
 
-## macOS
+## macOS/Linux
 
 ```bash
 nano compose.yml
 ```
 
-Use:
+Paste:
 
 ```yaml
 services:
-  freshrss:
+  freshrss-news:
     image: freshrss/freshrss:latest
-    container_name: freshrss
+    container_name: freshrss-news
     restart: unless-stopped
     ports:
       - "8080:80"
@@ -167,8 +210,21 @@ services:
       TZ: Europe/Copenhagen
       CRON_MIN: "0"
     volumes:
-      - ./data:/var/www/FreshRSS/data
-      - ./extensions:/var/www/FreshRSS/extensions
+      - ./news-data:/var/www/FreshRSS/data
+      - ./news-extensions:/var/www/FreshRSS/extensions
+
+  freshrss-research:
+    image: freshrss/freshrss:latest
+    container_name: freshrss-research
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      TZ: Europe/Copenhagen
+      CRON_MIN: "0"
+    volumes:
+      - ./research-data:/var/www/FreshRSS/data
+      - ./research-extensions:/var/www/FreshRSS/extensions
 ```
 
 ### Change the timezone
@@ -192,25 +248,39 @@ America/New_York
 Australia/Sydney
 ```
 
+### Why there are two services
+
+The instances are intentionally independent:
+
+```text
+News
+  localhost:8080
+  news-data/
+
+Research
+  localhost:8081
+  research-data/
+```
+
+Each has its own database, subscriptions, categories, settings, and article state.
+
 ### Update frequency
 
-This guide uses:
+Both services use:
 
 ```yaml
 CRON_MIN: "0"
 ```
 
-That runs the FreshRSS updater once per hour.
+This runs the FreshRSS updater once per hour.
 
-To use a different schedule, change `CRON_MIN`.
-
-For a personal research reader, hourly updates are usually a good starting point.
+For a personal research reader, hourly updates are a good starting point.
 
 Save the file.
 
 ---
 
-# 5. Start FreshRSS
+# 6. Start FreshRSS
 
 From the project directory:
 
@@ -224,17 +294,24 @@ Then verify:
 docker compose ps
 ```
 
-The `freshrss` container should be running.
-
-Open:
+You should see:
 
 ```text
-http://localhost:8080
+freshrss-news
+freshrss-research
+```
+
+both running.
+
+Open the Research instance:
+
+```text
+http://localhost:8081
 ```
 
 ---
 
-# 6. Complete the initial FreshRSS setup
+# 7. Complete the Research FreshRSS setup
 
 FreshRSS will open its installation screen.
 
@@ -244,30 +321,61 @@ Choose:
 - administrator username/password
 - **SQLite** for the database
 
-SQLite is convenient for a personal local installation because no separate database server is required.
+After setup, FreshRSS will open the Research interface.
 
-After setup, FreshRSS will open the main interface.
+The News instance has a completely separate setup at:
+
+```text
+http://localhost:8080
+```
+
+See `news-setup.md` for the News installation.
 
 ---
 
-# 7. Build your research categories
+# 8. Import the Research OPML
+
+Use the Research OPML from this repository:
+
+```text
+opml/freshrss-research.opml
+```
+
+In FreshRSS:
+
+**Subscription management → Import/Export → Import**
+
+Select the Research OPML.
+
+After importing, click the refresh/update button.
+
+The feed collection contains both direct journal feeds and PubMed-derived feeds.
+
+---
+
+# 9. Build your research categories
 
 A useful general structure is:
 
 ```text
-Research
-├── Core Journals
-├── Methods
-├── Clinical / Medicine
-├── Population Health
-├── Biology / Molecular
-└── PubMed
+Nature
+Cell
+Science
+Lancet & Elsevier
+BMJ
+PLOS
+Springer
+PubMed
 ```
 
-Alternatively, keep it simpler:
+Alternatively, users can create broader categories such as:
 
 ```text
 Core Journals
+Methods
+Clinical / Medicine
+Population Health
+Biology / Molecular
 PubMed
 ```
 
@@ -275,7 +383,7 @@ The important point is to avoid making too many folders at the beginning.
 
 ---
 
-# 8. Add journal RSS feeds
+# 10. Add journal RSS feeds
 
 For journals that provide a publisher RSS or Atom feed:
 
@@ -285,7 +393,7 @@ For journals that provide a publisher RSS or Atom feed:
    - RSS feed
    - Subscribe
    - Feed
-   - alerts
+   - Alerts
 3. Copy the RSS/Atom URL.
 4. In FreshRSS, open **Subscription management**.
 5. Click **Add**.
@@ -311,7 +419,8 @@ when the official feed exists.
 This generally reduces broken-feed problems and third-party dependencies.
 
 ---
-# 9. Use PubMed when a journal has no reliable RSS
+
+# 11. Use PubMed when a journal has no reliable RSS
 
 PubMed is an excellent fallback because it can create RSS feeds from searches.
 
@@ -328,9 +437,9 @@ This is useful when:
 - the journal has moved platforms
 - you want to monitor a research topic across multiple journals
 
-The Research OPML in this repository already contains four pre-configured PubMed RSS feeds. The searches used to create them are listed below so that they can be inspected, modified, or regenerated if necessary.
+The Research OPML in this repository already contains four pre-configured PubMed RSS feeds. The searches used to create them are documented in this section so that they can be inspected, modified, or regenerated if necessary.
 
-### PubMed IBD and Computational Methods
+## PubMed IBD and Computational Methods
 
 ```text
 (
@@ -352,65 +461,122 @@ AND
   OR "disease trajectory"[Title/Abstract]
   OR "disease progression"[Title/Abstract]
 )
+```
+
+The generated RSS feed is included in the Research OPML as:
+
+`PubMed IBD and Computational Methods`
+
+## PubMed Epidemiology and ML
+
+```text
+(
+  "Epidemiology"[Mesh]
+  OR epidemiolog*[Title/Abstract]
+  OR "population health"[Title/Abstract]
+  OR "life course"[Title/Abstract]
+  OR "life-course"[Title/Abstract]
+)
+AND
+(
+  "Machine Learning"[Mesh]
+  OR "Artificial Intelligence"[Mesh]
+  OR "machine learning"[Title/Abstract]
+  OR "artificial intelligence"[Title/Abstract]
+  OR "deep learning"[Title/Abstract]
+  OR "predictive model*"[Title/Abstract]
+  OR "representation learning"[Title/Abstract]
+  OR longitudinal[Title/Abstract]
+  OR "survival analysis"[Title/Abstract]
+  OR "time-to-event"[Title/Abstract]
+)
+```
+
+The generated RSS feed is included in the Research OPML as:
+
+`PubMed Epidemiology and ML`
+
+## PubMed Multi-omics and Biomarkers
+
+```text
+(
+  "Multi-Omics"[Title/Abstract]
+  OR "multiomics"[Title/Abstract]
+  OR "multi omics"[Title/Abstract]
+  OR "proteomics"[Mesh]
+  OR proteomic*[Title/Abstract]
+  OR "metabolomics"[Mesh]
+  OR metabolomic*[Title/Abstract]
+  OR "transcriptomics"[Title/Abstract]
+  OR "genomics"[Mesh]
+  OR genomics[Title/Abstract]
+  OR "blood biomarkers"[Title/Abstract]
+  OR biomarker*[Title/Abstract]
+  OR multimodal[Title/Abstract]
+  OR "multi-modal"[Title/Abstract]
+)
+AND
+(
+  human*[Title/Abstract]
+  OR patient*[Title/Abstract]
+  OR clinical[Title/Abstract]
+  OR disease[Title/Abstract]
+  OR health[Title/Abstract]
+)
+```
+
+The generated RSS feed is included in the Research OPML as:
+
+`PubMed Multi-omics and Biomarkers`
+
+## PubMed Causal and Population Health
+
+```text
+(
+  "Causal Inference"[Title/Abstract]
+  OR "causal inference"[Title/Abstract]
+  OR "target trial"[Title/Abstract]
+  OR "target trial emulation"[Title/Abstract]
+  OR "Mendelian randomization"[Title/Abstract]
+  OR "Mendelian randomisation"[Title/Abstract]
+  OR "health inequalities"[Title/Abstract]
+  OR "health inequities"[Title/Abstract]
+  OR "environmental epidemiology"[Title/Abstract]
+  OR "environmental exposure"[Title/Abstract]
+  OR "air pollution"[Title/Abstract]
+  OR climate[Title/Abstract]
+)
+AND
+(
+  epidemiolog*[Title/Abstract]
+  OR population[Title/Abstract]
+  OR health[Title/Abstract]
+  OR disease[Title/Abstract]
+  OR mortality[Title/Abstract]
+  OR "public health"[Title/Abstract]
+)
+```
+
+The generated RSS feed is included in the Research OPML as:
+
+`PubMed Causal and Population Health`
+
+### Recreating or modifying the feeds
+
+The RSS URLs generated by PubMed contain a PubMed-generated search identifier. The **search queries above are the reproducible part**.
+
+To recreate a feed:
+
+1. Copy the desired query.
+2. Paste it into PubMed.
+3. Run the search.
+4. Select **Create RSS**.
+5. Choose a suitable number of results.
+6. Add the generated RSS URL to FreshRSS.
+
 ---
 
-# 10. Build topic feeds with PubMed
-
-This is where FreshRSS becomes much more useful than a simple journal list.
-
-Instead of following only selected journals, use PubMed to discover papers from **any journal** matching a research topic.
-
-A general workflow:
-
-```text
-Research question
-      ↓
-PubMed search
-      ↓
-Check results
-      ↓
-Create RSS
-      ↓
-Add RSS URL to FreshRSS
-```
-
-Example:
-
-```text
-"machine learning"[Title/Abstract]
-AND
-epidemiology[Title/Abstract]
-```
-
-Or:
-
-```text
-("inflammatory bowel disease"[Title/Abstract]
- OR Crohn*[Title/Abstract]
- OR "ulcerative colitis"[Title/Abstract])
-AND
-("machine learning"[Title/Abstract]
- OR "artificial intelligence"[Title/Abstract])
-```
-
-The exact searches should be tailored to the user's field.
-
-## Good practice
-
-Do not create dozens of broad searches immediately.
-
-Start with perhaps:
-
-- 3–5 high-value topic searches
-- a small set of key journals
-
-Then examine the article volume for a few days.
-
-If a feed is too noisy, tighten the PubMed search.
-
----
-
-# 11. Recommended research-feed strategy
+# 12. Recommended research-feed strategy
 
 A useful balance is:
 
@@ -440,9 +606,9 @@ Using both is usually much better than subscribing to every potentially relevant
 
 ---
 
-# 12. First update
+# 13. First update
 
-After adding feeds, click FreshRSS's update/refresh button.
+After adding/importing feeds, click FreshRSS's update/refresh button.
 
 The first update can take a while.
 
@@ -454,37 +620,29 @@ Check:
 
 ---
 
-# 13. Automatic updates
+# 14. Automatic updates
 
-The Compose file contains:
+Both FreshRSS instances contain:
 
 ```yaml
 CRON_MIN: "0"
 ```
 
-so FreshRSS updates automatically once per hour.
+so both update automatically once per hour.
 
-The computer and Docker Desktop must be running for updates to occur.
+The computer and Docker must be running for updates to occur.
 
 If the computer is shut down, FreshRSS will not fetch feeds during that period.
 
 ---
 
-# 14. Common Docker commands
+# 15. Useful Docker commands
+
+These commands operate on both services unless you explicitly specify a service.
 
 ## Start
 
-### Windows
-
-```powershell
-cd C:\FreshRSS
-docker compose up -d
-```
-
-### macOS
-
-```bash
-cd ~/FreshRSS
+```text
 docker compose up -d
 ```
 
@@ -494,7 +652,7 @@ docker compose up -d
 docker compose down
 ```
 
-This stops the container but does not delete the persistent data directory.
+This stops both containers but does not delete persistent data.
 
 ## Restart
 
@@ -508,13 +666,25 @@ docker compose restart
 docker compose ps
 ```
 
-## View logs
+## View logs for both
 
 ```text
-docker logs freshrss --tail 100
+docker compose logs --tail 100
 ```
 
-## Apply a Compose change
+## View News logs
+
+```text
+docker logs freshrss-news --tail 100
+```
+
+## View Research logs
+
+```text
+docker logs freshrss-research --tail 100
+```
+
+## Apply Compose changes
 
 ```text
 docker compose up -d --force-recreate
@@ -522,28 +692,29 @@ docker compose up -d --force-recreate
 
 ---
 
-# 15. Back up the installation
+# 16. Backup
 
-The most important directory is:
+The two persistent data directories are:
 
 ```text
-data/
+news-data/
+research-data/
 ```
 
-Also keep:
+Extensions are stored in:
 
 ```text
-compose.yml
-extensions/
+news-extensions/
+research-extensions/
 ```
 
 A simple backup is to copy the complete FreshRSS project directory.
 
-Do not put the FreshRSS database or `data/` directory in a public Git repository.
+Do not put these runtime directories into a public Git repository.
 
 ---
 
-# 16. Migrating to another computer
+# 17. Migrating Research FreshRSS to another computer
 
 The setup is portable.
 
@@ -553,36 +724,21 @@ On the new computer:
 2. Create the project directory.
 3. Copy:
    - `compose.yml`
-   - `data/`
-   - `extensions/`
+   - `research-data/`
+   - `research-extensions/`
 4. Start:
 
 ```text
 docker compose up -d
 ```
 
-Open:
+Then open:
 
 ```text
-http://localhost:8080
+http://localhost:8081
 ```
 
-For a brand-new installation, use the OPML file instead of copying an existing database.
-
----
-
-# 17. OPML is useful for sharing the feed collection
-
-Once a good research collection has been built, export subscriptions from FreshRSS as OPML.
-
-That OPML can be:
-
-- backed up
-- moved to another computer
-- shared with another person
-- used to recreate the subscription list
-
-This is especially useful when several people want the same basic research-feed structure but different topic feeds.
+For a genuinely new Research installation, use the Research OPML instead of copying an existing database.
 
 ---
 
@@ -593,7 +749,7 @@ A good first version is:
 ```text
 Docker
   ↓
-FreshRSS
+FreshRSS Research
   ↓
 10–20 direct journal feeds
   +
