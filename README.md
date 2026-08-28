@@ -159,6 +159,26 @@ When a feed breaks:
 4. Update the relevant OPML file.
 5. Record the change in `CHANGELOG.md`.
 
+ 
+## Running FreshRSS
+From the FreshRSS project directory, start both containers using 
+
+`docker compose up -d`
+
+This starts both FreshRSS instances:
+
+News     → http://localhost:8080  
+Research → http://localhost:8081  
+
+To check that both instances are running 
+
+`docker compose ps`
+
+To stop FreshRSS 
+
+`docker compose down`
+
+
 ## Local data is not part of this repository
 
 Do **not** commit FreshRSS runtime data, databases, users, passwords, or private reading state.
