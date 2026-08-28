@@ -160,8 +160,11 @@ When a feed breaks:
 5. Record the change in `CHANGELOG.md`.
 
  
-## Running FreshRSS
-From the FreshRSS project directory, start both containers using 
+## Running FreshRSS after install
+
+Start Docker Desktop 
+
+From the FreshRSS project directory, start both containers in powershell or terminal using 
 
 `docker compose up -d`
 
