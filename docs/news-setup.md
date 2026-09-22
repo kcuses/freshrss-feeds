@@ -112,6 +112,12 @@ wsl -l -v
 
 The Linux distribution should use version 2.
 
+Install Ubuntu if prompted
+
+```powershell
+wsl --install ubuntu
+```
+
 Then verify Docker:
 
 ```powershell
